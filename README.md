@@ -32,8 +32,6 @@ This project demonstrates how to integrate with IBM Watson AI to create an intel
 ```
 venv/
 ├── travel_ai_notebook.ipynb    # Complete Jupyter notebook implementation
-├── travelai_clean.py          # Clean, modular Python script
-├── travelai.py               # Original working script
 └── README.md                 # This file
 ```
 
