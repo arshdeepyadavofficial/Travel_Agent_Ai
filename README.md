@@ -32,15 +32,13 @@ This project demonstrates how to integrate with IBM Watson AI to create an intel
 ```
 Travel_Agent_Ai/
 ├── travel_ai_notebook.ipynb    # Complete Jupyter notebook implementation
-├── .env                      # Your API key file (create this)
-├── arsh.env                  # Example environment file
+├── arsh.env                  # Your API key file (create this)
 └── README.md                 # This file
 ```
 
 **File Descriptions:**
 - **travel_ai_notebook.ipynb**: Interactive notebook with step-by-step implementation and detailed explanations
-- **.env**: Your API key configuration file (you need to create this)
-- **arsh.env**: Example environment file showing the format
+- **arsh.env**: Your API key configuration file (you need to create this)
 
 ## 🚀 Quick Start
 
@@ -54,7 +52,7 @@ Travel_Agent_Ai/
 
 1. **Clone or download the project files**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/arshdeepyadavofficial/Travel_Agent_Ai
    cd Travel_Agent_Ai
    ```
 
