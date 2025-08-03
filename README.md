@@ -30,12 +30,19 @@ This project demonstrates how to integrate with IBM Watson AI to create an intel
 ## 📁 Project Structure
 
 ```
-venv/
+Travel_Agent_Ai/
 ├── travel_ai_notebook.ipynb    # Complete Jupyter notebook implementation
-├── travelai_clean.py          # Clean, modular Python script
-├── travelai.py               # Original working script
+├── travelai_clean.py          # Clean, modular Python script (if available)
+├── travelai.py               # Original working script (if available)
+├── .env                      # Your API key file (create this)
+├── arsh.env                  # Example environment file
 └── README.md                 # This file
 ```
+
+**File Descriptions:**
+- **travel_ai_notebook.ipynb**: Interactive notebook with step-by-step implementation and detailed explanations
+- **.env**: Your API key configuration file (you need to create this)
+- **arsh.env**: Example environment file showing the format
 
 ## 🚀 Quick Start
 
@@ -50,55 +57,93 @@ venv/
 1. **Clone or download the project files**
    ```bash
    git clone <your-repo-url>
-   cd venv
+   cd Travel_Agent_Ai
    ```
 
 2. **Install dependencies**
    ```bash
-   pip install requests
+   pip install requests python-dotenv
    ```
 
-3. **Configure your API credentials**
-   - Replace `API_KEY` in the configuration with your IBM Cloud API key
-   - Verify your Watson AI deployment URL
+3. **Set up your IBM Cloud API key**
+   
+   Create a `.env` file in the project root directory and add your IBM Cloud API key:
+   ```bash
+   API_KEY=your_actual_ibm_cloud_api_key_here
+   ```
+   
+   **How to get your IBM Cloud API key:**
+   1. Go to [IBM Cloud Console](https://cloud.ibm.com/)
+   2. Navigate to **Manage** → **Access (IAM)** → **API Keys**
+   3. Click **Create** to generate a new API key
+   4. Copy the key and paste it in your `.env` file
+   
+   **Important Notes:**
+   - Never share your API key publicly
+   - Add `.env` to your `.gitignore` file
+   - The key should be without quotes or extra spaces
 
 ### Usage
 
 #### Option 1: Run the Jupyter Notebook (Recommended)
+1. **Set up your API key** (see Configuration section above)
+2. **Start Jupyter Notebook**
+   ```bash
+   jupyter notebook travel_ai_notebook.ipynb
+   ```
+3. **Run the cells in order** - the notebook includes detailed explanations for each step
+
+#### Option 2: Run as Python Script (if available)
 ```bash
-jupyter notebook travel_ai_notebook.ipynb
-```
-
-#### Option 2: Run the Python Script
-```bash
-python travelai_clean.py
-```
-
-#### Option 3: Import as Module
-```python
-from travelai_clean import get_watson_response
-
-response = get_watson_response("Plan a trip to Tokyo")
-print(response)
+# Make sure your .env file is set up first
+python travel_ai_notebook.py  # If you convert the notebook to .py
 ```
 
 ## 🔧 Configuration
 
-### API Configuration
+### Getting Your IBM Cloud API Key
 
-```python
-# IBM Cloud API Configuration
-API_KEY = "your-ibm-cloud-api-key-here"
-IAM_URL = 'https://iam.cloud.ibm.com/identity/token'
-DEPLOYMENT_URL = 'https://us-south.ml.cloud.ibm.com/ml/v4/deployments/{your-deployment-id}/ai_service_stream?version=2021-05-01'
+1. **Sign up/Login to IBM Cloud**
+   - Visit [IBM Cloud](https://cloud.ibm.com/)
+   - Create an account or login
+
+2. **Create Watson AI Service**
+   - Go to **Catalog** → **AI/Machine Learning** → **Watson Studio**
+   - Create a service instance
+
+3. **Generate API Key**
+   - Navigate to **Manage** → **Access (IAM)** → **API Keys**
+   - Click **Create** button
+   - Give it a name (e.g., "Travel AI Assistant")
+   - Copy the generated API key
+
+4. **Create Environment File**
+   - Create a `.env` file in your project directory
+   - Add your API key:
+   ```bash
+   API_KEY=your_actual_ibm_cloud_api_key_here
+   ```
+
+### Alternative Configuration Methods
+
+**Method 1: Custom Environment File (arsh.env)**
+```bash
+API_KEY=your_ibm_cloud_api_key_here
 ```
 
-### Required Environment Variables (Production)
-
+**Method 2: System Environment Variables**
 ```bash
-export IBM_CLOUD_API_KEY="your-api-key"
-export WATSON_DEPLOYMENT_ID="your-deployment-id"
-export WATSON_REGION="us-south"
+export API_KEY="your_ibm_cloud_api_key_here"
+```
+
+### API Configuration Example
+
+```python
+# The code automatically loads from .env or arsh.env files
+# Your .env file should contain:
+API_KEY=abcd1234-efgh-5678-ijkl-9012mnopqrst
+
+# The deployment URL is already configured in the code
 ```
 
 ## 💡 Features
@@ -124,24 +169,30 @@ export WATSON_REGION="us-south"
 
 ## 📚 Usage Examples
 
+Once your API key is configured, you can use the travel assistant for various queries:
+
 ### Basic Travel Query
 ```python
-response = get_watson_response("I'm planning a trip to Paris. Can you suggest popular tourist attractions?")
+# Ask about destinations
+travel_ai_assistant("I'm planning a trip to Paris. Can you suggest popular tourist attractions?")
 ```
 
 ### Itinerary Planning
 ```python
-response = get_watson_response("Create a 3-day itinerary for Rome including must-see attractions")
+# Multi-day trip planning
+travel_ai_assistant("Create a 3-day itinerary for Rome including must-see attractions")
 ```
 
 ### Travel Tips
 ```python
-response = get_watson_response("What should I pack for a winter trip to Iceland?")
+# Packing and preparation advice
+travel_ai_assistant("What should I pack for a winter trip to Iceland?")
 ```
 
 ### Local Recommendations
 ```python
-response = get_watson_response("Best authentic street food in Bangkok?")
+# Local experiences and food
+travel_ai_assistant("Best authentic street food in Bangkok?")
 ```
 
 ## 🔐 Authentication Flow
@@ -251,19 +302,31 @@ test_multiple_queries()
 
 ### Common Issues
 
-1. **Authentication Failures**
-   - Verify API key is correct
-   - Check if key has proper permissions
-   - Ensure no extra spaces in key
+1. **"❌ API key is missing" Error**
+   - Ensure your `.env` or `arsh.env` file exists in the project directory
+   - Check that the file contains: `API_KEY=your_actual_key_here`
+   - Make sure there are no extra spaces around the equals sign
+   - Verify the API key is valid and not expired
 
-2. **Network Issues**
+2. **Authentication Failures**
+   - Double-check your API key from IBM Cloud console
+   - Ensure the API key has proper permissions for Watson AI
+   - Try regenerating the API key if it's old
+
+3. **File Not Found Issues**
+   - Make sure you're running the notebook from the correct directory
+   - Check that `.env` or `arsh.env` file is in the same folder as the notebook
+   - Use absolute paths if needed
+
+4. **Network Issues**
    - Check internet connectivity
-   - Verify firewall settings
-   - Try different network
+   - Verify firewall settings allow HTTPS requests
+   - Try different network if corporate firewall blocks requests
 
-3. **Response Parsing Issues**
-   - Check if deployment supports streaming
+5. **Response Parsing Issues**
+   - Check if your Watson deployment supports streaming
    - Verify API version compatibility
+   - Ensure deployment URL is correct
 
 ## 🔄 Production Considerations
 
